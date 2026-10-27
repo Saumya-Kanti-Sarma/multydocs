@@ -75,7 +75,6 @@ export default function RootLayout({
                 {[
                   { label: "Home", href: "/" },
                   { label: "FAQs", href: "/faqs" },
-                  { label: "Blogs", href: "/blogs" },
                   { label: "Reviews", href: "/reviews" },
                   { label: "GitHub", href: "https://github.com/Saumya-Kanti-Sarma/multydocs" },
                 ].map((l) => (
