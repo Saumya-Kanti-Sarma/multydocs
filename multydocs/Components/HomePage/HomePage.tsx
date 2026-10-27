@@ -21,7 +21,6 @@ import { TbBuildingCommunity, TbHeartHandshake, TbBarbell } from "react-icons/tb
 import { LuBriefcase, LuGraduationCap } from "react-icons/lu";
 import Navbar from "@/Components/Navbar/Navbar";
 import { CertificateInterface } from "@/types/types";
-import Link from "next/link";
 
 interface HomePageProps {
   onCertificateChange: (cert: CertificateInterface) => void;
