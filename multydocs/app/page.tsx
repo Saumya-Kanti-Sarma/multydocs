@@ -1,5 +1,5 @@
 "use client";
-import EnterCertificate from "@/Components/EnterCertificate/EnterCertificate";
+import HomePage from "@/Components/HomePage/HomePage";
 import Navbar from "@/Components/Navbar/Navbar";
 import { useRef, useState } from "react";
 import { CertificateInterface } from "@/types/types";
@@ -23,12 +23,12 @@ export default function GenerateCertificate() {
   }
 
   if (certificate == null)
-    return <EnterCertificate onCertificateChange={setCertificate} />;
+    return <HomePage onCertificateChange={setCertificate} />;
 
   return (
     <>
       <Navbar />
-      <main className="flex h-(--body-height) overflow-hidden">
+      <main className="flex h-(--body-height)">
         <Sidebar
           certificate={certificate}
           fields={fields}
