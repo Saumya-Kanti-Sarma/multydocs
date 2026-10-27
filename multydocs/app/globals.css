@@ -1,3 +1,60 @@
 @import "tailwindcss";
 
-:root {}
+:root {
+  background: #ffffff;
+  --nav-height: 60px;
+  --body-height: calc(100vh - 61px);
+  --bg: #fff4df;
+  --primary: #141414;
+  --brand-orange: #FA0101;
+  --text: #000000;
+  --text-gray: #4a5565;
+  /* one pixel extra as havbar has hr tag under it*/
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+
+@layer base {
+  h1 {
+    @apply text-4xl font-bold tracking-tight;
+  }
+
+  h2 {
+    @apply text-3xl font-bold tracking-tight;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold;
+  }
+
+  h4 {
+    @apply text-xl font-semibold;
+  }
+
+  h5 {
+    @apply text-lg font-medium;
+  }
+
+  p {
+    @apply text-base leading-7;
+  }
+}
