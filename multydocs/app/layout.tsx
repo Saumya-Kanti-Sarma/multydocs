@@ -7,7 +7,7 @@ import Image from "next/image";
 
 
 const inter = Inter({ subsets: ['latin'] })
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://multydocs.developer-saumyasarma.workers.dev";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
