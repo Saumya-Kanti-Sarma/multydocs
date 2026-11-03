@@ -9,12 +9,7 @@ and the <CertificateEditor/> component takes over.
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { GoUpload } from "react-icons/go";
-import {
-  BsStarFill,
-  BsStarHalf,
-  BsStar,
-  BsGithub,
-} from "react-icons/bs";
+import { BsGithub, BsStarFill } from "react-icons/bs";
 import { MdOutlinePeople, MdOutlineEventNote, MdOutlineSportsScore } from "react-icons/md";
 import { PiChalkboardTeacherLight, PiCertificateLight } from "react-icons/pi";
 import { TbBuildingCommunity, TbHeartHandshake, TbBarbell } from "react-icons/tb";
@@ -41,49 +36,6 @@ const marqueeLogos = [
   { name: "Sports Coaches", icon: <MdOutlineSportsScore className="h-5 w-5" /> },
 ];
 
-
-
-// ─── Reviews ───────────────────────────────────────────────────────────────
-
-const reviews = [
-  {
-    name: "Priya M.",
-    role: "School Administrator",
-    rating: 5,
-    text: "Used it to generate 300 report cards in under 5 minutes. Absolutely love how simple it is!",
-    avatar: "PM",
-  },
-  {
-    name: "James K.",
-    role: "Event Organiser",
-    rating: 5,
-    text: "Created participation certificates for our hackathon with 200 attendees. Worked perfectly.",
-    avatar: "JK",
-  },
-  {
-    name: "Aarav S.",
-    role: "HR Manager",
-    rating: 4.5,
-    text: "Super clean UI. We use it every quarter for employee certificates. Saves us so much time.",
-    avatar: "AS",
-  },
-];
-
-
-
-// ─── Star Rating ────────────────────────────────────────────────────────────
-
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div className="flex gap-0.5 text-(--brand-orange)">
-      {[1, 2, 3, 4, 5].map((i) => {
-        if (rating >= i) return <BsStarFill key={i} className="h-4 w-4" />;
-        if (rating >= i - 0.5) return <BsStarHalf key={i} className="h-4 w-4" />;
-        return <BsStar key={i} className="h-4 w-4" />;
-      })}
-    </div>
-  );
-}
 
 
 // ─── Main Component ─────────────────────────────────────────────────────────
@@ -338,52 +290,19 @@ export default function HomePage({ onCertificateChange }: HomePageProps) {
           <div className="mx-auto max-w-7xl flex flex-col lg:flex-row gap-12 lg:gap-16 items-start justify-between">
 
             {/* Left — Video */}
-            <div className="w-full lg:w-[46%] shrink-0">
+            <div className="w-full shrink-0">
               <h2 id="demo-heading" className="mb-2 text-3xl font-black text-(--text)">
                 See It in Action ── Watch a tutorial video
               </h2>
               <div className="overflow-hidden rounded-2xl shadow-xl aspect-video">
                 <iframe
                   className="h-full w-full"
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                  src="https://www.youtube.com/embed/itvQxmU-wts"
                   title="MultyDocs demo video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
               </div>
-            </div>
-
-
-            {/* Right — Reviews */}
-            <div className="w-full lg:flex-1" aria-labelledby="reviews-heading">
-              <h2 id="reviews-heading" className="mb-2 text-3xl font-black text-(--text)">
-                What People Are Saying
-              </h2>
-              <p className="mb-6 text-sm text-(--text)/60">
-                Loved by educators, HR teams and event organisers.
-              </p>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {reviews.map((r, i) => (
-                  <li
-                    key={i}
-                    className="flex flex-col gap-3 rounded-2xl border border-gray-100 bg-white
-                               p-6 shadow-sm min-h-50
-                               hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
-                  >
-                    <StarRating rating={r.rating} />
-                    <p className="text-sm leading-relaxed text-(--text-gray) flex-1 overflow-hidden">&ldquo;{r.text}&rdquo;</p>
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-(--brand-orange)">
-                        {r.avatar}
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-(--text)">{r.name}</p>
-                        <p className="text-xs text-(--text-gray)">{r.role}</p>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
             </div>
 
           </div>
