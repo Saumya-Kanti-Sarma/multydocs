@@ -27,6 +27,7 @@ import {
 import { LuBriefcase, LuGraduationCap } from "react-icons/lu";
 import Navbar from "@/Components/Navbar/Navbar";
 import { CertificateInterface } from "@/types/types";
+import AskGPT from "../AskGPT/AskGPT";
 
 interface HomePageProps {
   onCertificateChange: (cert: CertificateInterface) => void;
@@ -231,7 +232,7 @@ export default function HomePage({
           aria-labelledby="hero-heading"
           className="flex flex-col items-center justify-center gap-10 px-6 py-16 md:py-20"
         >
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 w-full max-w-5xl">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 w-full max-w-5xl relative">
             <Image
               src="/logo.svg"
               alt="MultyDocs bulk document generator logo"
@@ -240,7 +241,9 @@ export default function HomePage({
               priority
               className="shrink-0 w-18 h-18 md:w-40 md:h-40 lg:w-56 lg:h-56"
             />
-
+            <span className="absolute right-0 top-0 z-10 inline-flex items-center rounded-full  bg-white px-3 py-1.5 text-xs font-semibold text-black/60 shadow-md">
+              <AskGPT />
+            </span>
             <div className="flex flex-col items-center md:items-start gap-2 md:gap-4">
               <h1
                 id="hero-heading"

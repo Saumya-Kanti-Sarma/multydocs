@@ -28,7 +28,6 @@ const Footer = () => {
               {[
                 { label: "Home", href: "/" },
                 { label: "FAQs", href: "/faqs" },
-                { label: "Reviews", href: "/reviews" },
                 { label: "GitHub", href: "https://github.com/Saumya-Kanti-Sarma/multydocs" },
               ].map((l) => (
                 <li key={l.href}>
