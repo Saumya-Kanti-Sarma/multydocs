@@ -1,50 +1,43 @@
 import { MetadataRoute } from "next";
+import { blogs } from "@/data/blogs";
 
 const baseUrl = "https://multydocs.in";
+const staticDates = {
+  home: new Date("2026-11-07T14:30:45Z"),
+  faqs: new Date("2026-11-05T11:20:35Z"),
+  blogs: new Date("2026-11-03T09:15:25Z"),
+  excel: new Date("2026-11-02T16:40:55Z"),
+  llm: new Date("2026-11-01T08:10:15Z"),
+};
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+  const staticUrls: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
+      lastModified: staticDates.home,
     },
     {
       url: `${baseUrl}/faqs`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
+      lastModified: staticDates.faqs,
     },
     {
-      url: `${baseUrl}/blogs/how-to-generate-bulk-certificates`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
+      url: `${baseUrl}/blogs`,
+      lastModified: staticDates.blogs,
     },
     {
-      url: `${baseUrl}/blogs/how-to-generate-bulk-certificates-for-free`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
+      url: `${baseUrl}/excel-to-certificate-generator`,
+      lastModified: staticDates.excel,
     },
     {
-      url: `${baseUrl}/blogs/how-to-generate-bulk-certificates-canva-alternative`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/blogs/how-to-generate-many-certificates-for-hackathon`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/blogs/how-to-create-same-certificate-for-many-users-for-free`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.85,
+      url: `${baseUrl}/llm.txt`,
+      lastModified: staticDates.llm,
     },
   ];
+
+  const blogUrls: MetadataRoute.Sitemap = blogs.map((post) => ({
+    url: `${baseUrl}/blogs/${post.slug}`,
+    lastModified: new Date(post.dateModified),
+  }));
+
+  return [...staticUrls, ...blogUrls];
 }

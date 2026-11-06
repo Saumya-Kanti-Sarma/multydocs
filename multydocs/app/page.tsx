@@ -1,54 +1,37 @@
-"use client";
-import HomePage from "@/Components/HomePage/HomePage";
-import Navbar from "@/Components/Navbar/Navbar";
-import { useRef, useState } from "react";
-import { CertificateInterface } from "@/types/types";
-import Sidebar from "@/Components/Sidebar/Sidebar";
-import CertificateEditor from "@/Components/CertificateEditor/CertificateEditor";
-import type { CsvResult, _type_TextField } from "@/types/types";
+import type { Metadata } from "next";
+import CertificatePage from "./CertificatePage";
 
-export default function GenerateCertificate() {
-  const [certificate, setCertificate] = useState<CertificateInterface | null>(null);
-  const [csvData, setCsvData] = useState<CsvResult | null>(null);
+export const metadata: Metadata = {
+  title: "Free Bulk Certificate Generator Online (CSV/Excel to Certificates) | MultyDocs",
+  description:
+    "Free bulk certificate generator. Upload your PNG/JPG template, import a CSV, map fields and download hundreds of personalized certificates as a ZIP. No sign-up required.",
+  alternates: {
+    canonical: "https://multydocs.in/",
+  },
+  openGraph: {
+    title: "Free Bulk Certificate Generator Online (CSV/Excel to Certificates) | MultyDocs",
+    description:
+      "Free bulk certificate generator. Upload your PNG/JPG template, import a CSV, map fields and download hundreds of personalized certificates as a ZIP. No sign-up required.",
+    type: "website",
+    url: "https://multydocs.in/",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "MultyDocs free bulk certificate generator",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free Bulk Certificate Generator Online (CSV/Excel to Certificates) | MultyDocs",
+    description:
+      "Free bulk certificate generator. Upload your PNG/JPG template, import a CSV, map fields and download hundreds of personalized certificates as a ZIP. No sign-up required.",
+    images: ["/og-image.png"],
+  },
+};
 
-  // The ONLY place where fields and selectedId live.
-  // Sidebar and CertificateEditor both receive them through props.
-  const [fields, setFields] = useState<_type_TextField[]>([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-
-  const imgRef = useRef<HTMLImageElement | null>(null);
-
-  function handleMoveField(id: string, x: number, y: number) {
-    setFields((prev) => prev.map((f) => (f.id === id ? { ...f, x, y } : f)));
-  }
-
-  if (certificate == null)
-    return <HomePage onCertificateChange={setCertificate} />;
-
-  return (
-    <>
-      <Navbar />
-      <main className="flex h-(--body-height)">
-        <Sidebar
-          certificate={certificate}
-          fields={fields}
-          setFields={setFields}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-          onCsvDataChange={setCsvData}
-          imgRef={imgRef}
-        />
-        <CertificateEditor
-          show_prev_next_navigation={csvData ? true : false}
-          certificate={certificate}
-          csvData={csvData}
-          fields={fields}
-          selectedId={selectedId}
-          imgRef={imgRef}
-          onSelectField={setSelectedId}
-          onMoveField={handleMoveField}
-        />
-      </main>
-    </>
-  );
+export default function HomePage() {
+  return <CertificatePage />;
 }

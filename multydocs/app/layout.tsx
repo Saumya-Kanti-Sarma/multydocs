@@ -5,12 +5,14 @@ import Footer from "@/Components/Footer/Footer";
 
 
 const inter = Inter({ subsets: ['latin'] })
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://multydocs.developer-saumyasarma.workers.dev";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL("https://multydocs.in"),
 
-  title: "MultyDocs",
+  title: {
+    default: "Free Bulk Certificate Generator Online (CSV/Excel to Certificates)",
+    template: "%s | MultyDocs",
+  },
   description:
     "Generate bulk certificates effortlessly. Upload your design and create professional certificates in minutes.",
 
@@ -19,27 +21,37 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "MultyDocs",
+    title: {
+      default: "MultyDocs",
+      template: "%s | MultyDocs",
+    },
     description:
       "Generate professional certificates in bulk with ease.",
-    url: siteUrl,
     siteName: "MultyDocs",
+    locale: "en_IN",
+    type: "website",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "MultyDocs",
+        alt: "MultyDocs - free bulk certificate generator",
       },
     ],
-    type: "website",
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "MultyDocs",
+    title: {
+      default: "MultyDocs",
+      template: "%s | MultyDocs",
+    },
     description: "Generate professional certificates in bulk with ease.",
     images: ["/og-image.png"],
+  },
+
+  alternates: {
+    canonical: "https://multydocs.in/",
   },
 };
 
@@ -47,7 +59,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en-IN" className={inter.className}>
       <body>
         {children}
         <Footer />

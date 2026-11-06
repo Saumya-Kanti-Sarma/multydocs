@@ -1,7 +1,7 @@
 <h1>MultiDocs — Generate certificate, report cards and identitiy cards in batch for free.</h1>
 
 <p align="center">
-  <a href="https://multydocs.developer-saumyasarma.workers.dev/" target="_blank">
+  <a href="https://multydocs.in/" target="_blank">
     <img src="./public/og-image.png" alt="MultiDocs Preview" width="100%" />
   </a>
 </p>
@@ -12,7 +12,7 @@
 
 Generating documents one by one is slow and tedious. MultiDocs lets you do it in just a few clicks: pick your template, upload your data, adjust the fields, and download a ready-to-use ZIP file with everything generated.
 
-🌐 **Live site:** [multydocs.developer-saumyasarma.workers.dev](https://multydocs.developer-saumyasarma.workers.dev/)
+🌐 **Live site:** [multydocs.in](https://multydocs.in/)
 
 ---
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BsGithub } from "react-icons/bs";
 import Image from "next/image";
+import { blogs } from "@/data/blogs";
 
 const Footer = () => {
   return (
@@ -28,19 +29,40 @@ const Footer = () => {
               {[
                 { label: "Home", href: "/" },
                 { label: "FAQs", href: "/faqs" },
+                { label: "Blog", href: "/blogs" },
+                ...blogs.map((post) => ({
+                  label: post.title,
+                  href: `/blogs/${post.slug}`,
+                })),
+                {
+                  label: "Excel to Certificate Generator",
+                  href: "/excel-to-certificate-generator",
+                },
                 { label: "GitHub", href: "https://github.com/Saumya-Kanti-Sarma/multydocs" },
-              ].map((l) => (
-                <li key={l.href}>
-                  <a
-                    href={l.href}
-                    target={l.href.startsWith("http") ? "_blank" : undefined}
-                    rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="text-sm text-white/60 hover:text-white transition-colors duration-200"
-                  >
-                    {l.label}
-                  </a>
-                </li>
-              ))}
+              ].map((l) => {
+                const external = l.href.startsWith("http");
+                return (
+                  <li key={l.href}>
+                    {external ? (
+                      <a
+                        href={l.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-white/60 hover:text-white transition-colors duration-200 break-all"
+                      >
+                        {l.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={l.href}
+                        className="text-sm text-white/60 hover:text-white transition-colors duration-200 break-all"
+                      >
+                        {l.label}
+                      </Link>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

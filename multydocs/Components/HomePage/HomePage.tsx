@@ -7,6 +7,7 @@ and the <CertificateEditor/> component takes over.
 "use client";
 
 import React, { useRef, useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { GoUpload } from "react-icons/go";
 import { BsGithub, BsStarFill } from "react-icons/bs";
@@ -602,6 +603,74 @@ export default function HomePage({
           </div>
         </section>
 
+        {/* Guides and tutorials */}
+        <section
+          id="guides"
+          className="px-6 py-20"
+          aria-labelledby="guides-heading"
+        >
+          <div className="mx-auto max-w-5xl">
+            <div className="text-center mb-12">
+              <h2
+                id="guides-heading"
+                className="text-3xl sm:text-4xl font-black text-(--text)"
+              >
+                Guides and Tutorials
+              </h2>
+              <p className="mt-4 text-(--text-gray) leading-relaxed">
+                Step-by-step guides to help you generate bulk certificates
+                online for free, with no sign-up required.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "How to Create Bulk Certificates (Step-by-Step Guide)",
+                  href: "/blogs/how-to-generate-bulk-certificates",
+                  description:
+                    "The complete pillar guide: upload a PNG/JPG template, import a CSV, map fields and download hundreds of certificates as a ZIP.",
+                },
+                {
+                  title: "Free Online Bulk Certificate Generator: No Sign-Up",
+                  href: "/blogs/how-to-generate-bulk-certificates-for-free",
+                  description:
+                    "Why bulk certificate generation is free on MultyDocs, what the limits are and how to get started without creating an account.",
+                },
+                {
+                  title: "Canva Bulk Create Alternative: Free Bulk Certificates",
+                  href: "/blogs/how-to-generate-bulk-certificates-canva-alternative",
+                  description:
+                    "Honest comparison with Canva Bulk Create: no paid plan, your own PNG/JPG template and free ZIP download.",
+                },
+              ].map((guide) => (
+                <article
+                  key={guide.href}
+                  className="rounded-2xl border border-gray-200 bg-white p-6 flex flex-col"
+                >
+                  <h3 className="text-lg font-black text-(--text) mb-2">
+                    <Link
+                      href={guide.href}
+                      className="hover:text-(--brand-orange) transition-colors"
+                    >
+                      {guide.title}
+                    </Link>
+                  </h3>
+                  <p className="text-(--text-gray) leading-relaxed mb-6 flex-1">
+                    {guide.description}
+                  </p>
+                  <Link
+                    href={guide.href}
+                    className="inline-block rounded-xl bg-(--brand-orange) px-6 py-2 text-sm font-bold text-white hover:opacity-90 transition-opacity"
+                  >
+                    Read guide
+                  </Link>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* FAQs */}
         <section
           id="faqs"
@@ -770,6 +839,27 @@ export default function HomePage({
             </a>
           </div>
         </section>
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "MultyDocs",
+              url: "https://multydocs.in/",
+              applicationCategory: "BusinessApplication",
+              operatingSystem: "Any",
+              offers: {
+                "@type": "Offer",
+                price: 0,
+                priceCurrency: "INR",
+              },
+              description:
+                "Free bulk certificate generator. Upload your PNG/JPG template, import a CSV, map fields and download hundreds of personalized certificates as a ZIP. No sign-up required.",
+            }),
+          }}
+        />
       </main>
     </>
   );
