@@ -7,7 +7,7 @@ const staticDates = {
   faqs: new Date("2026-11-05T11:20:35Z"),
   blogs: new Date("2026-11-03T09:15:25Z"),
   excel: new Date("2026-11-02T16:40:55Z"),
-  llm: new Date("2026-11-01T08:10:15Z"),
+  llm: new Date("2026-11-02T08:10:15Z"),
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -29,7 +29,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: staticDates.excel,
     },
     {
-      url: `${baseUrl}/llm.txt`,
+      url: `${baseUrl}/llms.txt`,
+      lastModified: staticDates.llm,
+    },
+    {
+      url: `${baseUrl}/ads.txt`,
       lastModified: staticDates.llm,
     },
   ];
