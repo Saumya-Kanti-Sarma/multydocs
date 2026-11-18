@@ -1,4 +1,6 @@
-# MultyDocs — LLM Context File
+import { NextResponse } from "next/server";
+
+const content = `# MultyDocs — LLM Context File
 
 ## Site Overview
 MultyDocs is a free bulk certificate generator that lets users upload a certificate template (PNG/JPG), import recipient data via CSV, map fields, and generate personalized certificates in bulk — downloaded as a ZIP file. No account or sign-up is required.
@@ -39,3 +41,13 @@ https://multydocs.in/sitemap.xml
 
 ## Robots
 https://multydocs.in/robots.txt
+`;
+
+export async function GET() {
+  return new NextResponse(content, {
+    status: 200,
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+    },
+  });
+}
