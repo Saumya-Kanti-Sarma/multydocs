@@ -60,6 +60,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-IN" className={inter.className}>
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8949360149342362"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
         {children}
         <Footer />
