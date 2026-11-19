@@ -1,12 +1,11 @@
 import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 
-const sesClient = new SESv2Client({
-	region: process.env.AWS_REGION ?? "us-east-1",
-	credentials: {
-		accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-	},
-});
+export interface Env {
+	AWS_ACCESS_KEY_ID: string;
+	AWS_SECRET_ACCESS_KEY: string;
+	AWS_REGION?: string;
+	SES_FROM_EMAIL?: string;
+}
 
 export interface SendEmailInput {
 	to: string;
@@ -15,14 +14,20 @@ export interface SendEmailInput {
 	from?: string;
 }
 
-export async function sendEmail({
-	to,
-	subject,
-	body,
-	from = process.env.SES_FROM_EMAIL!,
-}: SendEmailInput) {
+export async function sendEmail(
+	{ to, subject, body, from }: SendEmailInput,
+	env: Env,
+) {
+	const sesClient = new SESv2Client({
+		region: env.AWS_REGION ?? "us-east-1",
+		credentials: {
+			accessKeyId: env.AWS_ACCESS_KEY_ID,
+			secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+		},
+	});
+
 	const command = new SendEmailCommand({
-		FromEmailAddress: from,
+		FromEmailAddress: from ?? env.SES_FROM_EMAIL!,
 		Destination: {
 			ToAddresses: [to],
 		},
