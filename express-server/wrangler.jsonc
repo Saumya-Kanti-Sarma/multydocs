@@ -10,7 +10,20 @@
 	"observability": {
 		"enabled": true
 	},
-	"upload_source_maps": true
+	"upload_source_maps": true,
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "multydocs-db",
+			"database_id": "a1f42a94-df1e-4f52-8508-28d0eea9785e"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "CERTIFICATE_STORAGE",
+			"bucket_name": "multydocs-certificates"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

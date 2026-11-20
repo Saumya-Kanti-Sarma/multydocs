@@ -11,11 +11,12 @@ export interface SendEmailInput {
 	to: string;
 	subject: string;
 	body: string;
+	html?: string;
 	from?: string;
 }
 
 export async function sendEmail(
-	{ to, subject, body, from }: SendEmailInput,
+	{ to, subject, body, html, from }: SendEmailInput,
 	env: Env,
 ) {
 	const sesClient = new SESv2Client({
@@ -26,6 +27,14 @@ export async function sendEmail(
 		},
 	});
 
+	const bodyContent: Record<string, { Data: string }> = {};
+
+	if (html) {
+		bodyContent.Html = { Data: html };
+	} else {
+		bodyContent.Text = { Data: body };
+	}
+
 	const command = new SendEmailCommand({
 		FromEmailAddress: from ?? env.SES_FROM_EMAIL!,
 		Destination: {
@@ -34,9 +43,7 @@ export async function sendEmail(
 		Content: {
 			Simple: {
 				Subject: { Data: subject },
-				Body: {
-					Text: { Data: body },
-				},
+				Body: bodyContent,
 			},
 		},
 	});
