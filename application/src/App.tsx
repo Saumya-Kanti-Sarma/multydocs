@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
-import Editor from "./pages/editor";
+import Editor from "./pages/Editor";
 
 const SITE_URL = import.meta.env.VITE_SITE_URL;
 function ExternalRedirect({ to }: { to: string }) {
