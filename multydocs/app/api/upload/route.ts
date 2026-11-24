@@ -24,8 +24,7 @@ export async function POST(req: NextRequest) {
   }
 
   const id = randomUUID();
-  const ext = (file.name.split(".").pop() ?? "bin").toLowerCase();
-  const key = `${id}.${ext}`;
+  const key = id;
 
   await s3.send(
     new PutObjectCommand({
