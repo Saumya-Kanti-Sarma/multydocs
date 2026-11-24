@@ -1,7 +1,0 @@
-CREATE TABLE IF NOT EXISTS coupons (
-    id TEXT PRIMARY KEY,
-    code TEXT NOT NULL UNIQUE,
-    quota INTEGER NOT NULL DEFAULT 100
-);
-
-CREATE INDEX IF NOT EXISTS idx_coupons_code ON coupons(code);

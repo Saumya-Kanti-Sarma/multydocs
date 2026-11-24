@@ -1,54 +1,48 @@
 "use client";
 import HomePage from "@/Components/HomePage/HomePage";
-import Navbar from "@/Components/Navbar/Navbar";
-import { useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { CertificateInterface } from "@/types/types";
-import Sidebar from "@/Components/Sidebar/Sidebar";
-import CertificateEditor from "@/Components/CertificateEditor/CertificateEditor";
-import type { CsvResult, _type_TextField } from "@/types/types";
+
+const VITE_APP_URL = "https://app.multydocs.in";
+
+function fileToDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
 
 export default function GenerateCertificate() {
   const [certificate, setCertificate] = useState<CertificateInterface | null>(null);
-  const [csvData, setCsvData] = useState<CsvResult | null>(null);
+  const [uploading, setUploading] = useState(false);
 
-  // The ONLY place where fields and selectedId live.
-  // Sidebar and CertificateEditor both receive them through props.
-  const [fields, setFields] = useState<_type_TextField[]>([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const handleCertificateChange = useCallback(async (file: File) => {
+    if (!["image/png", "image/jpeg"].includes(file.type)) {
+      return;
+    }
 
-  const imgRef = useRef<HTMLImageElement | null>(null);
+    setUploading(true);
 
-  function handleMoveField(id: string, x: number, y: number) {
-    setFields((prev) => prev.map((f) => (f.id === id ? { ...f, x, y } : f)));
-  }
+    try {
+      const dataUrl = await fileToDataUrl(file);
 
-  if (certificate == null)
-    return <HomePage onCertificateChange={setCertificate} />;
+      const cert: CertificateInterface = {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        url: dataUrl,
+      };
 
-  return (
-    <>
-      <Navbar />
-      <main className="flex h-(--body-height)">
-        <Sidebar
-          certificate={certificate}
-          fields={fields}
-          setFields={setFields}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-          onCsvDataChange={setCsvData}
-          imgRef={imgRef}
-        />
-        <CertificateEditor
-          show_prev_next_navigation={csvData ? true : false}
-          certificate={certificate}
-          csvData={csvData}
-          fields={fields}
-          selectedId={selectedId}
-          imgRef={imgRef}
-          onSelectField={setSelectedId}
-          onMoveField={handleMoveField}
-        />
-      </main>
-    </>
-  );
+      const url = `${VITE_APP_URL}?image=${encodeURIComponent(dataUrl)}`;
+      window.location.href = url;
+    } catch (error) {
+      console.error("Failed to process image:", error);
+    } finally {
+      setUploading(false);
+    }
+  }, []);
+
+  return <HomePage onCertificateChange={handleCertificateChange} />;
 }
