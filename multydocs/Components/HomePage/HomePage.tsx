@@ -1,8 +1,8 @@
 /*
-For Future Saumya:
 This is the 1st screen that is visible on the website launch.
-When a user selects an image (jpg or png) this component becomes invisible
-and the <CertificateEditor/> component takes over.
+When a user uploads an image (jpg or png), it is uploaded to Cloudflare R2
+and the user is redirected to https://app.multydocs.in/:id where id is the
+image id returned by the upload API.
 */
 "use client";
 
@@ -27,11 +27,22 @@ import {
 } from "react-icons/tb";
 import { LuBriefcase, LuGraduationCap } from "react-icons/lu";
 import Navbar from "@/Components/Navbar/Navbar";
-import { CertificateInterface } from "@/types/types";
 import AskGPT from "../AskGPT/AskGPT";
 
-interface HomePageProps {
-  onCertificateChange: (cert: CertificateInterface) => void;
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.multydocs.in";
+
+async function uploadToCloudflare(file: File): Promise<{ id: string; url: string }> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch("/api/upload", { method: "POST", body: formData });
+
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({ error: "Upload failed" }));
+    throw new Error(error?.error ?? "Upload failed");
+  }
+
+  return res.json();
 }
 
 const audiences = [
@@ -159,36 +170,27 @@ const faqs = [
   },
 ];
 
-export default function HomePage({
-  onCertificateChange,
-}: HomePageProps) {
+export default function HomePage() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
   const [loading, setLoading] = useState(false);
   const [contactMessage, setContactMessage] = useState("");
 
-  const processFile = (file: File) => {
-    if (
-      !["image/png", "image/jpeg"].includes(file.type)
-    ) {
+  const processFile = async (file: File) => {
+    if (!["image/png", "image/jpeg"].includes(file.type)) {
       return;
     }
 
     setLoading(true);
 
-    const fileUrl = URL.createObjectURL(file);
-
-    const cert: CertificateInterface = {
-      name: file.name,
-      size: file.size,
-      type: file.type,
-      url: fileUrl,
-    };
-
-    setTimeout(() => {
+    try {
+      const { id } = await uploadToCloudflare(file);
+      window.location.href = `${APP_URL}/${id}`;
+    } catch (error) {
+      console.error("Failed to upload template:", error);
       setLoading(false);
-      onCertificateChange(cert);
-    }, 600);
+      alert("Upload failed. Please try again.");
+    }
   };
 
   const handleFileChange = (
@@ -267,43 +269,6 @@ export default function HomePage({
 
           {/* Upload and instructions */}
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-10 w-full max-w-5xl">
-            {/* <div className="flex justify-center items-center w-full md:flex-1">
-              <div className="w-full max-w-md text-left">
-                <h2 className="mb-5 text-xl sm:text-2xl font-bold text-(--text)">
-                  How to Generate Certificates in Bulk
-                </h2>
-
-                <ol className="list-decimal space-y-4 pl-5 text-sm sm:text-base leading-relaxed text-(--text-gray)">
-                  <li>
-                    Upload your existing certificate or
-                    document template.
-                  </li>
-                  <li>
-                    Add recipient information or upload
-                    your data in CSV format.{" "}
-                    <a
-                      href="/guides/create-csv-for-certificates"
-                      className="font-medium underline underline-offset-4 hover:opacity-80"
-                    >
-                      Learn how to create CSV data
-                    </a>.
-                  </li>
-                  <li>
-                    Map your CSV columns to the corresponding
-                    fields in your template.
-                  </li>
-                  <li>
-                    Generate multiple personalized documents
-                    and download them as a ZIP file.
-                  </li>
-                </ol>
-
-                <p className="mt-6 text-sm text-(--text-gray)">
-                  No need to manually edit names, dates or
-                  other details on every certificate.
-                </p>
-              </div>
-            </div> */}
 
             {/* Upload area */}
             <div

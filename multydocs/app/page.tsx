@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import CertificatePage from "./CertificatePage";
+import HomePage from "@/Components/HomePage/HomePage";
 
 export const metadata: Metadata = {
   title: "Free Bulk Certificate Generator Online (CSV/Excel to Certificates) | MultyDocs",
@@ -32,6 +32,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
-  return <CertificatePage />;
+export default function Page() {
+  return <HomePage />;
 }
