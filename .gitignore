@@ -178,3 +178,4 @@ dist
 .env*
 !.env.example
 .wrangler/
+lib
