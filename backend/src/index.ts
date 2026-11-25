@@ -3,7 +3,7 @@ import cors from "cors";
 import { CORS_settings } from './constants/constants';
 import v1Router from './v1';
 import { env } from './constants/env';
-import { errorHandler } from './middleware/error.middleware';
+// import { errorHandler } from './middleware/error.middleware';
 
 
 const app = express();
@@ -12,7 +12,7 @@ const app = express();
 app.use(json());
 app.use(cors(CORS_settings));
 app.use('/api/v1', v1Router)
-app.use(errorHandler); //must be registered after all routes
+// app.use(errorHandler); //must be registered after all routes
 
 
 // routes
