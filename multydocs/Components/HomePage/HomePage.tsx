@@ -6,8 +6,7 @@ image id returned by the upload API.
 */
 "use client";
 
-import React, { useRef, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { GoUpload } from "react-icons/go";
@@ -32,19 +31,23 @@ async function uploadToCloudflare(file: File): Promise<{ id: string }> {
   const formData = new FormData();
   formData.append("file", file);
 
+  let res: Response;
   try {
-    const res = await axios.post(`${BASE_API_URL}/certificate`, formData);
-    console.log(res)
-    return { id: res.data.id };
+    res = await fetch(`${BASE_API_URL}/certificate`, {
+      method: "POST",
+      body: formData,
+    });
   } catch (error: unknown) {
-    if (axios.isAxiosError(error) && error.response) {
-      throw new Error(
-        uploadErrorMessages[error.response.status] ?? "Upload failed"
-      );
-    }
     const message = error instanceof Error ? error.message : String(error);
     throw new Error(`Upload failed: ${message}`);
   }
+
+  if (!res.ok) {
+    throw new Error(uploadErrorMessages[res.status] ?? "Upload failed");
+  }
+
+  const data: { id: string } = await res.json();
+  return { id: data.id };
 }
 
 const audiences = [
@@ -178,6 +181,9 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [contactMessage, setContactMessage] = useState("");
 
+  useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_BASE_API_URL)
+  })
   const processFile = async (file: File) => {
     if (!["image/png", "image/jpeg"].includes(file.type)) {
       return;
@@ -187,6 +193,7 @@ export default function HomePage() {
 
     try {
       const { id } = await uploadToCloudflare(file);
+      console.log(id)
       window.location.href = `${APP_URL}/${id}`;
     } catch (error) {
       console.error("Failed to upload template:", error);
