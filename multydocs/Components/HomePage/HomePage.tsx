@@ -7,42 +7,44 @@ image id returned by the upload API.
 "use client";
 
 import React, { useRef, useState } from "react";
+import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import { GoUpload } from "react-icons/go";
 import { BsGithub, BsStarFill } from "react-icons/bs";
-import {
-  MdOutlinePeople,
-  MdOutlineEventNote,
-  MdOutlineSportsScore,
-} from "react-icons/md";
-import {
-  PiChalkboardTeacherLight,
-  PiCertificateLight,
-} from "react-icons/pi";
-import {
-  TbBuildingCommunity,
-  TbHeartHandshake,
-  TbBarbell,
-} from "react-icons/tb";
+import { MdOutlinePeople, MdOutlineEventNote, MdOutlineSportsScore, } from "react-icons/md";
+import { PiChalkboardTeacherLight, PiCertificateLight, } from "react-icons/pi";
+import { TbBuildingCommunity, TbHeartHandshake, TbBarbell, } from "react-icons/tb";
 import { LuBriefcase, LuGraduationCap } from "react-icons/lu";
 import Navbar from "@/Components/Navbar/Navbar";
 import AskGPT from "../AskGPT/AskGPT";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.multydocs.in";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
+const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
-async function uploadToCloudflare(file: File): Promise<{ id: string; url: string }> {
+const uploadErrorMessages: Record<number, string> = {
+  400: "No file Provided",
+  413: "File exceeds size limit",
+  500: "upload failed",
+};
+
+async function uploadToCloudflare(file: File): Promise<{ id: string }> {
   const formData = new FormData();
   formData.append("file", file);
 
-  const res = await fetch("/api/upload", { method: "POST", body: formData });
-
-  if (!res.ok) {
-    const error = await res.json().catch(() => ({ error: "Upload failed" }));
-    throw new Error(error?.error ?? "Upload failed");
+  try {
+    const res = await axios.post(`${BASE_API_URL}/certificate`, formData);
+    console.log(res)
+    return { id: res.data.id };
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(
+        uploadErrorMessages[error.response.status] ?? "Upload failed"
+      );
+    }
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Upload failed: ${message}`);
   }
-
-  return res.json();
 }
 
 const audiences = [

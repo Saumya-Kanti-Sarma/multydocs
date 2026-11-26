@@ -14,9 +14,12 @@ export const HTTP_STATUS = {
   TOO_MANY_REQUESTS: 429,
   SERVER_ERROR: 500,
 } as const;
-
+const origin = {
+  production: ['https://multydocs.in', 'https://app.multydocs.in', 'https://account.multydocs.in', 'https://www.multydocs.in'],
+  development: true
+}
 export const CORS_settings = {
-  origin: ['https://multydocs.in', 'https://app.multydocs.in', 'https://account.multydocs.in', 'https://www.multydocs.in'],
+  origin: process.env.SERVER == "production" ? origin.production : origin.development,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 } as CorsOptions;
