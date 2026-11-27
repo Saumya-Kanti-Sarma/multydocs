@@ -17,9 +17,7 @@ import { TbBuildingCommunity, TbHeartHandshake, TbBarbell, } from "react-icons/t
 import { LuBriefcase, LuGraduationCap } from "react-icons/lu";
 import Navbar from "@/Components/Navbar/Navbar";
 import AskGPT from "../AskGPT/AskGPT";
-
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
-const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
+import { APP_URL, BASE_API_URL } from "@/constants/constants";
 
 const uploadErrorMessages: Record<number, string> = {
   400: "No file Provided",
